@@ -1,0 +1,13 @@
+.fixed-table-loading {
+    display: none;
+}
+
+.no-records-found {
+    display: none;
+}
+
+@media print {
+    .print-none {
+        display: none;
+    }
+}

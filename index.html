@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>calculador de precios</title>
+
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"
+        integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/css/bootstrap.min.css"
+        integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <script type="text/javascript"
+        src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.4.1/js/bootstrap-datepicker.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.6/umd/popper.min.js"
+        integrity="sha384-wHAiFfRlMFy6i5SRaxvfOCifBUQy1xHdJ/yoi7FRNXMRBu5WHdZYu1hA6ZOblgut"
+        crossorigin="anonymous"></script>
+    <script src="https://unpkg.com/bootstrap-table@1.15.4/dist/bootstrap-table.min.js"></script>
+
+
+    <script src="./src/script.js"></script>
+    <link rel="stylesheet" href="./src/style.css">
+</head>
+
+<body>
+    <div id="load-data" class="container mt-5">
+        <span>Trabajo Practico - Clase 10</span>
+        <div class="border p-2">
+            <form action="./src/api.php" method="post">
+                <div class="row">
+                    <div class="col-2">
+                        <p>Fecha:</p>
+                    </div>
+                    <div class="col-3">
+                        <input type="date" class="form-control" name="date">
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-2">
+                    </div>
+                    <div class="col-3">
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-2">
+                        <p>Nombres:</p>
+                    </div>
+                    <div class="col-3">
+                        <input type="text" class="form-control" name="name">
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-2">
+                        <p>Provincia:</p>
+                    </div>
+                    <div class="col-3">
+                        <select class="custom-select mr-sm-2" name="taxes">
+                            <option value="1" selected>Provincia...</option>
+                            <option value="1">CABA (10%)</option>
+                            <option value="2">Bs. As. (20%)</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="row mt-5">
+                    <div class="col-2">
+                        <p>Detalle:</p>
+                    </div>
+                </div>
+
+                <table id="my_table_1" data-toggle="table" data-sort-stable="true">
+                    <thead>
+                        <tr>
+                            <th data-sortable="true">Codigo</th>
+                            <th data-sortable="true">Descripcion</th>
+                            <th data-sortable="true">Cantidad</th>
+                            <th data-sortable="false">Precio</th>
+                        </tr>
+                    </thead>
+                    <tbody class="inputs-list">
+                        <tr class="input-list-row" id="inputs-row-0">
+                            <td><input type="number" class="form-control" name="code"></td>
+                            <td><input type="text" class="form-control" name="description"></td>
+                            <td><input type="number" class="form-control" name="quantity"></td>
+                            <td><input type="number" class="form-control" name="price"></td>
+                        </tr>
+                    </tbody>
+
+                </table>
+                <div class="row">
+                    <div class="col">
+                        <button type="button" class="btn btn-success send">Enviar</button>
+                    </div>
+                    <div class="col text-right">
+                        <button type="button" class="btn btn-danger remove-row">Borrar fila</button>
+                        <button type="button" class="btn btn-primary add-new-row">Agregar fila</button>
+                    </div>
+                </div>
+
+            </form>
+        </div>
+    </div>
+
+    <div id="view-data" class="container mt-5">
+        <div class="border p-2">
+            <div class="row">
+                <div class="col">
+                    <p>
+                        Nombre: <b><span id="view-name"></span></b><br>
+                        Provincia: <b><span id="view-city"></span></b><br>
+                        Impuesto: <b><span id="view-tax"></span>%</b>
+                    </p>
+                </div>
+                <div class="col text-right">
+                    <p><b><span id="view-date"></span></b></p>
+                </div>
+            </div>
+            <br>
+
+            <p><b>Detalle</b></p>
+
+            <table data-toggle="table" data-sort-stable="true">
+                <thead>
+                    <tr>
+                        <th data-sortable="true">Codigo</th>
+                        <th data-sortable="true">Descripcion</th>
+                        <th data-sortable="true">Cantidad</th>
+                        <th data-sortable="false">Precio</th>
+                        <th data-sortable="false">Total</th>
+                    </tr>
+                </thead>
+                <tbody class="view-table"></tbody>
+            </table>
+
+            <div class="row">
+                <div class="col d-flex align-items-end mb-3">
+                    <button type="button" class="btn btn-success print-none mr-2"
+                        onclick="window.print();return false;" />Imprimir</button>
+                    <button type="button" class="btn btn-primary print-none new-back mr-2" />Nuevo</button>
+                    <button type="button" class="btn btn-warning print-none edit-back" />Editar</button>
+                </div>
+                <div class="col text-right mt-5">
+                    <p>
+                        Subtotal: $<b><span id="view-subtotal"></span></b><br>
+                        Impuestos: $<b><span id="view-total-tax"></span></b><br>
+                        Total: $<b><span id="view-total"></span></b>
+                    </p>
+                </div>
+            </div>
+
+
+        </div>
+    </div>
+
+</body>
+
+</html>
