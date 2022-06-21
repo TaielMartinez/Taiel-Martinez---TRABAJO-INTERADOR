@@ -2,6 +2,8 @@ const debug = true
 
 $(document).ready(function () {
     $("#view-data").hide()
+
+    // Añadir nueva columna
     $(".add-new-row").click(() => {
         var number = $('.input-list-row').length
         $(".inputs-list").append(`
@@ -14,11 +16,13 @@ $(document).ready(function () {
         `)
     })
 
+    // Borrar columna
     $(".remove-row").click(() => {
         var number = $('.input-list-row').length - 1
         $(`#inputs-row-${number}`).remove()
     })
 
+    // Nuevo
     $(".new-back").click(() => {
         $("#view-data").hide()
         $(".inputs-list").html(`
@@ -32,11 +36,13 @@ $(document).ready(function () {
         $("#load-data").show()
     })
 
+    // Editar
     $(".edit-back").click(() => {
         $("#view-data").hide()
         $("#load-data").show()
     })
 
+    // Enviar
     $(".send").click(() => {
         $("#load-data").hide()
         const rows_count = $('.input-list-row').length
@@ -58,6 +64,8 @@ $(document).ready(function () {
         }
 
         if (debug) console.log(data);
+
+        // Llamada a la api
         $.ajax({
             type: "POST",
             url: "./src/api.php",
@@ -94,7 +102,7 @@ $(document).ready(function () {
                 $("#view-data").show()
             },
             error: (err) => {
-                console.error(err)
+                console.error(err) // Error en la api
             }
         })
     })

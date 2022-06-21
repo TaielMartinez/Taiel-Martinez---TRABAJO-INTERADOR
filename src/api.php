@@ -1,7 +1,11 @@
 <?php
 
-# Podria haber echo todo en JS? si. Pero es una materia de PHP y esta api es una excusa para mostrar que algo se xD
-# Y si, los http code no son los standares. Pero no voy a armar un sistema de logs, es simplemente para debug
+# Podria haber echo todo en JS? si. Pero es una materia de PHP y esta api es una excusa para entregar un PHP
+# Los HTTP Code no son los standares, simplemente es un ejemplo para debug :)
+# La idea de hacer AJAX salio en clase, espero sea bien recibida ya que me costo mucho
+
+# Para mantener un codigo limpio, basado en los princios de "clean code", opte por no comentar mi codigo;
+# usar variables descriptivas y confiar en lo claro de mi escritura.
 
 try {
     $data = json_decode($_POST["rows"]);
@@ -11,6 +15,7 @@ try {
 }
 
 $summation = 0;
+
 for ($i=0; $i < count($data); $i++) {
     if(isset($data[$i])) {
         if(!empty($data[$i]->price )) {
